@@ -22,6 +22,8 @@ services:
       - backend.local.env
     ports:
       - "6029:6029"
+    volumes:
+      - ../wochterbuch-backend/dict:/app/dict
     depends_on:
       - postgres
     networks:

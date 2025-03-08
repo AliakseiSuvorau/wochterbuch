@@ -5,6 +5,8 @@
 Möchten Sie die Artikeln für die Wöchter lernen? Dann diese Applikation ist für Sie!
 Добавляйте слова в словарь, просматривайте словарь и тренируйте артикли.
 
+- Доступно вычитывание слов из файла в формате `csv` или добавление через веб-интерфейс вручную
+
 ## Run the application
 
 Starts only backend with database:
@@ -19,6 +21,5 @@ docker-compose -f .\docker\docker-compose-dev.yml up -d
 
 ## TODO
 
-- Вычитка словаря из файла
 - Пагинация при выводе списка слов
 - Режим тренировки

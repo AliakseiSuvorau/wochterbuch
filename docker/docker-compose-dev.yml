@@ -20,6 +20,8 @@ services:
       dockerfile: Dockerfile
     env_file:
       - backend.dev.env
+    volumes:
+      - ../wochterbuch-backend/dict:/app/dict
     depends_on:
       - postgres
     networks:

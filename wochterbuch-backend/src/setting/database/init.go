@@ -2,13 +2,14 @@ package database
 
 import (
 	"fmt"
+	"os"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
-	"wochterbuch-backend/src/model/dtos"
-)
 
-var DB *gorm.DB
+	"wochterbuch-backend/src/global"
+	"wochterbuch-backend/src/model"
+)
 
 func Init() {
 	var (
@@ -26,8 +27,8 @@ func Init() {
 		panic(fmt.Sprintf("failed to connect database: %v", err.Error()))
 	}
 
-	DB = db
-	if err := DB.AutoMigrate(&dtos.Word{}); err != nil {
+	global.DB = db
+	if err := global.DB.AutoMigrate(&model.Word{}); err != nil {
 		panic(fmt.Sprintf("failed to auto migrate database: %v", err.Error()))
 	}
 }
