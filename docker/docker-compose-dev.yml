@@ -1,0 +1,60 @@
+services:
+  postgres:
+    container_name: wochterbuch-postgres
+    image: postgres:alpine3.17
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - wochterbuch-postgres:/var/lib/postgresql/data
+    networks:
+      - wochterbuch-internal
+
+  backend:
+    container_name: wochterbuch-backend
+    build:
+      context: ../wochterbuch-backend
+      dockerfile: Dockerfile
+    env_file:
+      - backend.dev.env
+    depends_on:
+      - postgres
+    networks:
+      - wochterbuch-internal
+      - wochterbuch-external
+
+  frontend:
+    build:
+      context: ../wochterbuch-frontend
+      dockerfile: Dockerfile
+    container_name: wochterbuch-frontend
+    env_file:
+      - frontend.env
+    networks:
+      - wochterbuch-external
+
+  nginx:
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    container_name: wochterbuch-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - wochterbuch-external
+
+
+volumes:
+  wochterbuch-postgres:
+
+networks:
+  wochterbuch-internal:
+    driver: bridge
+  wochterbuch-external:
+    driver: bridge
