@@ -1,3 +1,5 @@
+name: wochterbuch
+
 services:
   postgres:
     container_name: wochterbuch-postgres
@@ -6,6 +8,10 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=secret
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d postgres"]
+      interval: 1s
+      retries: 3
     ports:
       - "5432:5432"
     volumes:
@@ -23,7 +29,8 @@ services:
     volumes:
       - ../wochterbuch-backend/dict:/app/dict
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - wochterbuch-internal
       - wochterbuch-external

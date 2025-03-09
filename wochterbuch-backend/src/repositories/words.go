@@ -19,6 +19,10 @@ func (wr *WordsRepository) GetById(id uint64) (*model.Word, error) {
 }
 
 func (wr *WordsRepository) Insert(word *model.Word) error {
+	if word == nil {
+		return nil
+	}
+
 	if wr.exists(word) {
 		return nil
 	}
@@ -29,9 +33,17 @@ func (wr *WordsRepository) Insert(word *model.Word) error {
 func (wr *WordsRepository) InsertMultiple(words []*model.Word) error {
 	filteredWords := make([]*model.Word, 0, len(words))
 	for _, word := range words {
+		if word == nil {
+			continue
+		}
+
 		if !wr.exists(word) {
 			filteredWords = append(filteredWords, word)
 		}
+	}
+
+	if len(filteredWords) == 0 {
+		return nil
 	}
 
 	result := global.DB.Create(filteredWords)
