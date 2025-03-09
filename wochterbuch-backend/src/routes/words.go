@@ -5,8 +5,9 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"wochterbuch-backend/src/db/repositories"
-	"wochterbuch-backend/src/model/dtos"
+
+	"wochterbuch-backend/src/model"
+	"wochterbuch-backend/src/repositories"
 )
 
 func AddWord(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +21,7 @@ func AddWord(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var newWord dtos.Word
+	var newWord model.Word
 	if jsonErr := json.Unmarshal(payload, &newWord); jsonErr != nil {
 		log.Printf("Error has occurred while unmarshalling request body: %v", jsonErr)
 		w.WriteHeader(http.StatusBadRequest)

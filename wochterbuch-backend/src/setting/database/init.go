@@ -2,32 +2,33 @@ package database
 
 import (
 	"fmt"
+	"os"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"os"
-	"wochterbuch-backend/src/model/dtos"
-)
+	"gorm.io/gorm/logger"
 
-var DB *gorm.DB
+	"wochterbuch-backend/src/global"
+	"wochterbuch-backend/src/model"
+)
 
 func Init() {
 	var (
-		user   = os.Getenv("USER")
-		pass   = os.Getenv("PASSWORD")
-		host   = os.Getenv("HOST")
-		port   = os.Getenv("PORT")
-		dbname = os.Getenv("DB_NAME")
+		user   = os.Getenv("POSTGRES_USER")
+		pass   = os.Getenv("POSTGRES_PASSWORD")
+		host   = os.Getenv("POSTGRES_HOST")
+		port   = os.Getenv("POSTGRES_PORT")
+		dbname = os.Getenv("POSTGRES_DB_NAME")
 	)
 
 	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", user, pass, host, port, dbname)
-
-	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
 	if err != nil {
 		panic(fmt.Sprintf("failed to connect database: %v", err.Error()))
 	}
 
-	DB = db
-	if err := DB.AutoMigrate(&dtos.Word{}); err != nil {
+	global.DB = db
+	if err := global.DB.AutoMigrate(&model.Word{}); err != nil {
 		panic(fmt.Sprintf("failed to auto migrate database: %v", err.Error()))
 	}
 }
