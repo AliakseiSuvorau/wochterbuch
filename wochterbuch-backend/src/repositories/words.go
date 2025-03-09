@@ -18,6 +18,12 @@ func (wr *WordsRepository) GetById(id uint64) (*model.Word, error) {
 	return &word, result.Error
 }
 
+func (wr *WordsRepository) GetByIds(ids []uint64) ([]*model.Word, error) {
+	var words []*model.Word
+	result := global.DB.Where("ID IN ?", ids).Find(&words)
+	return words, result.Error
+}
+
 func (wr *WordsRepository) Insert(word *model.Word) error {
 	if word == nil {
 		return nil
@@ -58,4 +64,10 @@ func (wr *WordsRepository) GetAll() ([]*model.Word, error) {
 
 func (wr *WordsRepository) exists(w *model.Word) bool {
 	return !errors.Is(global.DB.First(w).Error, gorm.ErrRecordNotFound)
+}
+
+func (wr *WordsRepository) Count() int64 {
+	var count int64
+	global.DB.Table("words").Count(&count)
+	return count
 }

@@ -1,6 +1,5 @@
 import React from "react";
-
-const articles = ["der", "die", "das"];
+import {articles} from "../constants/AppConstants";
 
 const ArticleButtons = ({ selectedArticle, setSelectedArticle }) => {
   return (

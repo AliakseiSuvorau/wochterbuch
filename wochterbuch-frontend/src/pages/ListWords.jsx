@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
 import {backendUrl} from '../constants/AppConstants';
+import "../styles/App.css";
 
 const ListWords = () => {
   const [words, setWords] = useState([]);
@@ -13,17 +14,19 @@ const ListWords = () => {
   }, []);
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl mb-4">Список слов</h1>
-      <ul className="list-disc pl-5">
-        {words.map((item, index) => (
-          <li key={index}>
-            {item.article} {item.word}
-          </li>
-        ))}
-      </ul>
-      <BackButton />
-    </div>
+      <div className="page-container">
+          <div className="p-4">
+              <h1 className="text-xl mb-4">Список слов</h1>
+              <ul className="list-disc pl-5">
+                  {words.map((item, index) => (
+                      <li key={index}>
+                          {item.article} {item.word}
+                      </li>
+                  ))}
+              </ul>
+              <BackButton/>
+          </div>
+      </div>
   );
 };
 

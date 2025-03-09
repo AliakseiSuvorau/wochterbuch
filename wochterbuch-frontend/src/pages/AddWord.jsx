@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ArticleButtons from "../components/ArticleButtons";
 import BackButton from "../components/BackButton";
 import {backendUrl} from '../constants/AppConstants';
+import "../styles/App.css";
 
 const AddWord = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -31,21 +32,23 @@ const AddWord = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl mb-4">Добавить слово</h1>
-      <ArticleButtons selectedArticle={selectedArticle} setSelectedArticle={setSelectedArticle} />
-      <input
-        type="text"
-        value={word}
-        onChange={(e) => setWord(e.target.value)}
-        placeholder="Введите слово"
-        className="border p-2 mt-2"
-      />
-      <button className="p-2 border rounded bg-green-500 text-white ml-2" onClick={handleAddWord}>
-        Add
-      </button>
-      <BackButton />
-    </div>
+      <div className="page-container">
+          <div className="p-4">
+              <h1 className="text-xl mb-4">Добавить слово</h1>
+              <ArticleButtons selectedArticle={selectedArticle} setSelectedArticle={setSelectedArticle}/>
+              <input
+                  type="text"
+                  value={word}
+                  onChange={(e) => setWord(e.target.value)}
+                  placeholder="Введите слово"
+                  className="border p-2 mt-2"
+              />
+              <button className="p-2 border rounded bg-green-500 text-white ml-2" onClick={handleAddWord}>
+                  Add
+              </button>
+              <BackButton/>
+          </div>
+      </div>
   );
 };
 
