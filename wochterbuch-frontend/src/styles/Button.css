@@ -1,4 +1,4 @@
-.button-80 {
+.wb-button {
     background: #fff;
     backface-visibility: hidden;
     border-radius: .375rem;
@@ -24,19 +24,19 @@
     touch-action: manipulation;
 }
 
-.button-80:not(:disabled):hover {
+.wb-button:not(:disabled):hover {
     transform: scale(1.05);
 }
 
-.button-80:not(:disabled):hover:active {
+.wb-button:not(:disabled):hover:active {
     transform: scale(1.05) translateY(.125rem);
 }
 
-.button-80:focus {
+.wb-button:focus {
     outline: 0 solid transparent;
 }
 
-.button-80:focus:before {
+.wb-button:focus:before {
     content: "";
     left: calc(-1*.375rem);
     pointer-events: none;
@@ -46,19 +46,19 @@
     user-select: none;
 }
 
-.button-80:focus:not(:focus-visible) {
+.wb-button:focus:not(:focus-visible) {
     outline: 0 solid transparent;
 }
 
-.button-80:focus:not(:focus-visible):before {
+.wb-button:focus:not(:focus-visible):before {
     border-width: 0;
 }
 
-.button-80:not(:disabled):active {
+.wb-button:not(:disabled):active {
     transform: translateY(.125rem);
 }
 
-.button-80.active-button {
+.wb-button.active-button {
     background-color: #3498db;
     color: white;
     transform: scale(1.05);

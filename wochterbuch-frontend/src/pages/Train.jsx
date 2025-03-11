@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/ArticleChooseButton.css";
+import "../styles/Button.css";
 import "../styles/App.css";
 import {articles, backendUrl} from "../constants/AppConstants";
 
@@ -23,7 +23,6 @@ const Train = () => {
             const data = await response.json();
             setWords(data);
             setCurrentIndex(0);
-            setCorrectCount(0);
             setSelectedArticle(null);
             setIsDisabled(false);
             setFeedback("");
@@ -68,7 +67,7 @@ const Train = () => {
                             {articles.map((article) => (
                                 <button
                                     key={article}
-                                    className={`button-80 ${selectedArticle === article ? "active-button" : ""}`}
+                                    className={`wb-button ${selectedArticle === article ? "active-button" : ""}`}
                                     onClick={() => handleArticleClick(article)}
                                     disabled={isDisabled && selectedArticle === article}
                                 >
@@ -78,7 +77,7 @@ const Train = () => {
                         </div>
                     </div>
                 )}
-                <button className="button-80" onClick={() => navigate("/")}>
+                <button className="wb-button" onClick={() => navigate("/")}>
                     Back
                 </button>
                 <p>{feedback}</p>

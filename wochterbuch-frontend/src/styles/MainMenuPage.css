@@ -1,0 +1,58 @@
+.main-menu {
+    /*Size*/
+    width: 40%;
+    height: 90%;
+
+    /*Border*/
+    border: solid #19ae19;
+    border-radius: 1rem;
+
+    /*Background*/
+    background-color: #d6ff90;
+
+    /*Content*/
+    display: grid;
+    align-content: stretch;
+    grid-template-rows: 10% auto;
+}
+
+.main-menu-title {
+    text-align: center;
+    align-content: center;
+    color: #0f8c0f;
+}
+
+.main-menu-buttons {
+    /*Size*/
+    width: 70%;
+
+    /*Content*/
+    display: grid;
+    justify-self: center;
+}
+
+.main-menu-image {
+    width: fit-content;
+    height: 15rem;
+
+    justify-self: center;
+    margin-top: auto;
+}
+
+.vocabulary-actions {
+    display: grid;
+    justify-content: space-between;
+    align-content: end;
+    grid-template-columns: 49% 49%;
+    margin: 2% 0;
+}
+
+.train-button {}
+
+.main-menu-button {
+    width: 100%;
+    text-align: center;
+
+    border: solid #19ae19;
+    background-color: #9eef46;
+}

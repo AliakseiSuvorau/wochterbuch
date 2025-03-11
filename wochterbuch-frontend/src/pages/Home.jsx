@@ -1,5 +1,8 @@
 import React from "react";
 import "../styles/App.css";
+import "../styles/Button.css"
+import "../styles/MainMenuPage.css"
+import WochterbuchPicture from "../images/wochterbuch.png";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -7,17 +10,32 @@ const Home = () => {
 
     return (
         <div className="page-container">
-            <div className="p-4">
-                <h1 className="text-xl mb-4">Главная</h1>
-                <button className="p-2 border rounded bg-blue-500 text-white" onClick={() => navigate("/add")}>
-                    Add
-                </button>
-                <button className="p-2 border rounded bg-green-500 text-white ml-2" onClick={() => navigate("/list")}>
-                    List
-                </button>
-                <button className="p-2 border rounded bg-yellow-500 text-white ml-2" onClick={() => navigate("/train")}>
-                    Train
-                </button>
+            <div className="main-menu">
+                <div className="main-menu-title">
+                    <h1 className="text-xl mb-4">Wöchterbuch</h1>
+                </div>
+                <div className="main-menu-image">
+                    <img src={WochterbuchPicture} alt="smth" style={{width: "100%", height: "100%"}}/>
+                </div>
+                <div className="main-menu-buttons">
+                    <div className="vocabulary-actions">
+                    <span className="add-button">
+                        <button className="wb-button main-menu-button" onClick={() => navigate("/add")}>
+                            Добавить слово
+                        </button>
+                    </span>
+                    <span className="list-button">
+                        <button className="wb-button main-menu-button" onClick={() => navigate("/list")}>
+                            Список слов
+                        </button>
+                    </span>
+                    </div>
+                    <div className="train-button">
+                        <button className="wb-button main-menu-button" onClick={() => navigate("/train")}>
+                            Режим тренировки
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );
