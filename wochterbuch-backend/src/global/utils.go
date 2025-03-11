@@ -9,3 +9,5 @@ import (
 var Log *log.Logger
 
 var DB *gorm.DB
+
+var WordRandomBatchSize int64

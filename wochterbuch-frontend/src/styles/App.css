@@ -1,0 +1,5 @@
+.page-container {
+    display: grid;
+    place-items: center;
+    height: 90vh;
+}
