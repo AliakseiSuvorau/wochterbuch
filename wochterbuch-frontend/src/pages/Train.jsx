@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Button.css";
 import "../styles/App.css";
+import "../styles/Train.css";
 import {articles, backendUrl} from "../constants/AppConstants";
 
 const Train = () => {
@@ -10,7 +11,7 @@ const Train = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [correctCount, setCorrectCount] = useState(0);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [disabledArticles, setDisabledArticles] = useState([]);
     const [feedback, setFeedback] = useState("");
 
     useEffect(() => {
@@ -24,10 +25,10 @@ const Train = () => {
             setWords(data);
             setCurrentIndex(0);
             setSelectedArticle(null);
-            setIsDisabled(false);
+            setDisabledArticles([]);
             setFeedback("");
         } catch (error) {
-            console.error("Ошибка при загрузке слов:", error);
+            console.error("Error while fetching words:", error);
         }
     };
 
@@ -36,51 +37,67 @@ const Train = () => {
 
         const correctArticle = words[currentIndex].article;
         if (article === correctArticle) {
-            setFeedback("Correct!");
+            setFeedback("Верно!");
             setCorrectCount(correctCount + 1);
             setTimeout(() => {
                 if (currentIndex + 1 < words.length) {
                     setCurrentIndex(currentIndex + 1);
                     setSelectedArticle(null);
-                    setIsDisabled(false);
+                    setDisabledArticles([]);
                     setFeedback("");
                 } else {
                     fetchWords();
                 }
             }, 1000);
         } else {
-            setFeedback("Try again");
-            setIsDisabled(true);
+            setFeedback("Попробуйте еще раз!");
+            setDisabledArticles([...disabledArticles, article]);
             setCorrectCount(0);
         }
     };
 
     return (
         <div className="page-container">
-            <div className="train-container">
-                <h1>Train</h1>
-                <p>Correct answers in a row: {correctCount}</p>
-                {words.length > 0 && (
-                    <div>
-                        <h2>{words[currentIndex].word}</h2>
-                        <div className="article-buttons">
-                            {articles.map((article) => (
-                                <button
-                                    key={article}
-                                    className={`wb-button ${selectedArticle === article ? "active-button" : ""}`}
-                                    onClick={() => handleArticleClick(article)}
-                                    disabled={isDisabled && selectedArticle === article}
-                                >
-                                    {article}
-                                </button>
-                            ))}
-                        </div>
+            <div className="page-frame">
+                <div className="page-title">
+                    <h1>Wöchterbuch</h1>
+                </div>
+                <div className="train-container">
+                    <div className="train-page-subtitle">
+                        <h2>Режим тренировки</h2>
                     </div>
-                )}
-                <button className="wb-button" onClick={() => navigate("/")}>
-                    Back
-                </button>
-                <p>{feedback}</p>
+                    <div className="train-counter">
+                        <p>Правильных ответов подряд: {correctCount}</p>
+                    </div>
+                    {words.length > 0 && (
+                        <div className="word-with-translation-and-choice-buttons">
+                            <div className="word-with-translation">
+                                    <h2 style={{margin: 0}}>{words[currentIndex].word}</h2>
+                                    <p style={{margin: 0, color: "#7c7a7a"}}>{words[currentIndex].translation}</p>
+                            </div>
+                            <div className="article-buttons">
+                                {articles.map((article) => (
+                                    <button
+                                        key={article}
+                                        className={`wb-button ${selectedArticle === article ? "active-button" : ""}`}
+                                        onClick={() => handleArticleClick(article)}
+                                        disabled={disabledArticles.includes(article)}
+                                    >
+                                        {article}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                    <div className="back-button">
+                        <button className="wb-button" onClick={() => navigate("/")}>
+                            Назад
+                        </button>
+                    </div>
+                    <div className="feedback">
+                        <p>{feedback}</p>
+                    </div>
+                </div>
             </div>
         </div>
     );
