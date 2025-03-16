@@ -4,6 +4,8 @@ import "../styles/Button.css";
 import "../styles/App.css";
 import "../styles/Train.css";
 import {articles, backendUrl} from "../constants/AppConstants";
+import BackButton from "../components/BackButton";
+import Title from "../components/Title";
 
 const Train = () => {
     const navigate = useNavigate();
@@ -28,7 +30,7 @@ const Train = () => {
             setDisabledArticles([]);
             setFeedback("");
         } catch (error) {
-            console.error("Error while fetching words:", error);
+            console.error("Error while fetching words: ", error);
         }
     };
 
@@ -48,7 +50,7 @@ const Train = () => {
                 } else {
                     fetchWords();
                 }
-            }, 1000);
+            }, 400);
         } else {
             setFeedback("Попробуйте еще раз!");
             setDisabledArticles([...disabledArticles, article]);
@@ -59,11 +61,9 @@ const Train = () => {
     return (
         <div className="page-container">
             <div className="page-frame">
-                <div className="page-title">
-                    <h1>Wöchterbuch</h1>
-                </div>
+                <Title/>
                 <div className="train-container">
-                    <div className="train-page-subtitle">
+                    <div className="page-subtitle">
                         <h2>Режим тренировки</h2>
                     </div>
                     <div className="train-counter">
@@ -79,7 +79,7 @@ const Train = () => {
                                 {articles.map((article) => (
                                     <button
                                         key={article}
-                                        className={`wb-button ${selectedArticle === article ? "active-button" : ""}`}
+                                        className={`wb-button article-button ${selectedArticle === article ? "active-button" : ""}`}
                                         onClick={() => handleArticleClick(article)}
                                         disabled={disabledArticles.includes(article)}
                                     >
@@ -89,11 +89,7 @@ const Train = () => {
                             </div>
                         </div>
                     )}
-                    <div className="back-button">
-                        <button className="wb-button" onClick={() => navigate("/")}>
-                            Назад
-                        </button>
-                    </div>
+                    <BackButton/>
                     <div className="feedback">
                         <p>{feedback}</p>
                     </div>

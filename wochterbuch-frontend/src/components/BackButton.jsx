@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/Common.css";
 
 const BackButton = () => {
   const navigate = useNavigate();
   return (
-    <button className="p-2 border rounded bg-gray-300" onClick={() => navigate("/")}>
-      Back
-    </button>
+      <div className="back-button-footer">
+          <button className="wb-button main-interface-button" onClick={() => navigate("/")}>
+              Назад
+          </button>
+      </div>
   );
 };
 

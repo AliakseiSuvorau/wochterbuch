@@ -1,33 +1,175 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
-import {backendUrl} from '../constants/AppConstants';
+import { backendUrl, defaultPageSize } from "../constants/AppConstants";
 import "../styles/App.css";
+import "../styles/ListWords.css";
+import del from "../images/delete.svg";
+import edit from "../images/edit.svg";
+import add from "../images/add.svg";
+import left from "../images/leftArrow.svg";
+import right from "../images/rightArrow.svg";
+import tick from "../images/tick.svg";
+import Title from "../components/Title";
 
 const ListWords = () => {
-  const [words, setWords] = useState([]);
+    const [words, setWords] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize] = useState(defaultPageSize);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch(`${backendUrl}/dictionary/list`)
-      .then((res) => res.json())
-      .then((data) => setWords(data))
-      .catch(() => alert("Ошибка загрузки списка слов"));
-  }, []);
+    useEffect(() => {
+        fetch(`${backendUrl}/dictionary/list?page=${page}&size=${pageSize}`)
+            .then((res) => res.json())
+            .then((data) => setWords(data))
+            .catch(() => alert("Error while fetching words"));
+    }, [page]);
 
-  return (
-      <div className="page-container">
-          <div className="p-4">
-              <h1 className="text-xl mb-4">Список слов</h1>
-              <ul className="list-disc pl-5">
-                  {words.map((item, index) => (
-                      <li key={index}>
-                          {item.article} {item.word}
-                      </li>
-                  ))}
-              </ul>
-              <BackButton/>
-          </div>
-      </div>
-  );
+    const handleDelete = (id) => {
+        fetch(`${backendUrl}/dictionary/word/delete`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id })
+        })
+            .then(() => {
+                setWords(words.filter(word => word.id !== id));
+            })
+            .catch(() => alert("Error deleting a word"));
+    };
+
+    const handleEdit = (id, currentArticle, currentWord, currentTranslation) => {
+        setWords(words.map(word =>
+            word.id === id
+                ? { ...word, isEditing: true, newArticle: currentArticle, newWord: currentWord, newTranslation: currentTranslation }
+                : word
+        ));
+    };
+
+    const handleSave = (id, newArticle, newWord, newTranslation) => {
+        fetch(`${backendUrl}/dictionary/word/edit`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, article: newArticle, word: newWord, translation: newTranslation })
+        })
+            .then(() => {
+                setWords(words.map(word =>
+                    word.id === id
+                        ? { ...word, isEditing: false, article: newArticle, word: newWord, translation: newTranslation }
+                        : word
+                ));
+            })
+            .catch(() => alert("Error editing a word"));
+    };
+
+    return (
+        <div className="page-container">
+            <div className="page-frame">
+                <Title />
+                <div className="list-container" style={{}}>
+                    <div className="page-subtitle">
+                        <h2>Список слов</h2>
+                    </div>
+                    <div className="list">
+                        {words.map((item) => (
+                            <div className="list-item">
+                                {item.isEditing ? (
+                                    <>
+                                        <select value={item.newArticle} onChange={(e) =>
+                                            setWords(words.map(word =>
+                                                word.id === item.id
+                                                    ? {...word, newArticle: e.target.value}
+                                                    : word
+                                            ))
+                                        }>
+                                            <option value="der">der</option>
+                                            <option value="die">die</option>
+                                            <option value="das">das</option>
+                                        </select>
+                                        <div>
+                                            <input
+                                                type="text"
+                                                value={item.newWord}
+                                                onChange={(e) =>
+                                                    setWords(words.map(word =>
+                                                        word.id === item.id
+                                                            ? {...word, newWord: e.target.value}
+                                                            : word
+                                                    ))
+                                                }
+                                            />
+                                            <input
+                                                type="text"
+                                                value={item.newTranslation}
+                                                onChange={(e) =>
+                                                    setWords(words.map(word =>
+                                                        word.id === item.id
+                                                            ? {...word, newTranslation: e.target.value}
+                                                            : word
+                                                    ))
+                                                }
+                                            />
+                                        </div>
+                                        <button className="wb-button save-button"
+                                                onClick={() => handleSave(item.id, item.newArticle, item.newWord, item.newTranslation)}>
+                                            <img src={tick} alt={"Сохранить"}/>
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="word">
+                                            <span>
+                                                <p style={{margin: 0}}>{item.article} {item.word}</ p>
+                                            </span>
+                                            <span>
+                                                <p style={{
+                                                    margin: 0,
+                                                    color: "#7c7a7a",
+                                                    fontSize: "small"
+                                                }}>{item.translation}</p>
+                                            </span>
+                                        </div>
+                                        <button className="wb-button edit-delete-button"
+                                                onClick={() => handleEdit(item.id, item.article, item.word, item.translation)}>
+                                            <img src={edit} alt="Редактировать"/>
+                                        </button>
+                                        <button className="wb-button edit-delete-button"
+                                                onClick={() => handleDelete(item.id)}>
+                                            <img src={del} alt="Удалить"/>
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <button className="wb-button add-button" onClick={() => navigate("/add")}>
+                            <img src={add} alt="Добавить"/>
+                        </button>
+                    </div>
+                    <div className="dict-page-footer">
+                        <div className="pagination">
+                        <span>
+                            <button className="wb-button change-page-button main-interface-button"
+                                    onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+                                    style={{display: "flex", justifyContent: "center"}}>
+                                <img src={left} alt="Назад"/>
+                            </button>
+                        </span>
+                            <span className="page-number">Страница {page}</span>
+                            <span>
+                            <button className="wb-button change-page-button main-interface-button"
+                                    onClick={() => setPage(prev => prev + 1)}
+                                    style={{display: "flex", justifyContent: "center"}}>
+                                 <img src={right} alt="Вперед"/>
+                            </button>
+                        </span>
+                        </div>
+                        <BackButton/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default ListWords;

@@ -1,9 +1,3 @@
-.train-page-subtitle {
-    text-align: center;
-    align-content: center;
-    color: #0f8c0f;
-}
-
 .train-counter {
     text-align: center;
 }
@@ -14,10 +8,6 @@
 
 .word-with-translation {
     margin: 10%;
-}
-
-.back-button {
-    text-align: center;
 }
 
 .feedback {

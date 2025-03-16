@@ -1,0 +1,12 @@
+.new-word {
+    align-items: center;
+}
+
+.save-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    margin: 0;
+    aspect-ratio: 1 / 1;
+}
