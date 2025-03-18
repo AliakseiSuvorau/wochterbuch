@@ -16,7 +16,7 @@ const Home = () => {
                 <div className="main-menu-image">
                     <img src={WochterbuchPicture} alt="logo" style={{width: "100%", height: "100%"}}/>
                 </div>
-                <div className="main-menu-buttons">
+                <div className="main-menu-buttons footer">
                     <div className="vocabulary-actions">
                         <span>
                             <button className="wb-button main-menu-button main-interface-button" onClick={() => navigate("/add")}>

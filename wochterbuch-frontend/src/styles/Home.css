@@ -1,18 +1,11 @@
 .main-menu-buttons {
     /*Size*/
     width: 70%;
-
-    /*Content*/
-    display: grid;
-    justify-self: center;
 }
 
 .main-menu-image {
     width: fit-content;
     height: 15rem;
-
-    justify-self: center;
-    margin-top: auto;
 }
 
 .vocabulary-actions {

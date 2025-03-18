@@ -64,28 +64,32 @@ const ListWords = () => {
     return (
         <div className="page-container">
             <div className="page-frame">
-                <Title />
-                <div className="list-container" style={{}}>
-                    <div className="page-subtitle">
-                        <h2>Список слов</h2>
-                    </div>
-                    <div className="list">
+                <Title/>
+                <div className="page-subtitle">
+                    <h2>Список слов</h2>
+                </div>
+                <div className="list-container">
+                    <div>
                         {words.map((item) => (
-                            <div className="list-item">
+                            <>
                                 {item.isEditing ? (
-                                    <>
-                                        <select value={item.newArticle} onChange={(e) =>
-                                            setWords(words.map(word =>
-                                                word.id === item.id
-                                                    ? {...word, newArticle: e.target.value}
-                                                    : word
-                                            ))
-                                        }>
+                                    <div className="edit-word">
+                                        <select
+                                            value={item.newArticle}
+                                            onChange={(e) =>
+                                                setWords(words.map(word =>
+                                                    word.id === item.id
+                                                        ? {...word, newArticle: e.target.value}
+                                                        : word
+                                                ))
+                                            }
+                                            style={{width: "fit-content", aspectRatio: "1 / 1"}}
+                                        >
                                             <option value="der">der</option>
                                             <option value="die">die</option>
                                             <option value="das">das</option>
                                         </select>
-                                        <div>
+                                        <div style={{display: "flex", flexDirection: "column"}}>
                                             <input
                                                 type="text"
                                                 value={item.newWord}
@@ -113,9 +117,9 @@ const ListWords = () => {
                                                 onClick={() => handleSave(item.id, item.newArticle, item.newWord, item.newTranslation)}>
                                             <img src={tick} alt={"Сохранить"}/>
                                         </button>
-                                    </>
+                                    </div>
                                 ) : (
-                                    <>
+                                    <div className="list-item">
                                         <div className="word">
                                             <span>
                                                 <p style={{margin: 0}}>{item.article} {item.word}</ p>
@@ -136,9 +140,9 @@ const ListWords = () => {
                                                 onClick={() => handleDelete(item.id)}>
                                             <img src={del} alt="Удалить"/>
                                         </button>
-                                    </>
+                                    </div>
                                 )}
-                            </div>
+                            </>
                         ))}
                     </div>
                     <div style={{display: "flex", justifyContent: "center"}}>
@@ -146,7 +150,7 @@ const ListWords = () => {
                             <img src={add} alt="Добавить"/>
                         </button>
                     </div>
-                    <div className="dict-page-footer">
+                    <div className="dict-page-footer footer">
                         <div className="pagination">
                         <span>
                             <button className="wb-button change-page-button main-interface-button"

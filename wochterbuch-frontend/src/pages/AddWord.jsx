@@ -9,23 +9,25 @@ import tick from "../images/tick.svg";
 const AddWord = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [word, setWord] = useState("");
+  const [translation, setTranslation] = useState("")
 
   const handleAddWord = async () => {
-    if (!selectedArticle || !word) {
-      alert("Choose an article and enter a word!");
+    if (!selectedArticle || !word || !translation) {
+      alert("Choose an article and enter a word and a translation!");
       return;
     }
 
     const response = await fetch(`${backendUrl}/dictionary/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ article: selectedArticle, word }),
+      body: JSON.stringify({ article: selectedArticle, word, translation }),
     });
 
     if (response.ok) {
       alert("The word was added");
       setSelectedArticle(null);
       setWord("");
+      setTranslation("");
     } else {
       alert("Error while adding the word");
     }
@@ -44,14 +46,24 @@ const AddWord = () => {
                       <option value="die">die</option>
                       <option value="das">das</option>
                   </select>
-                  <input
-                      type="text"
-                      onChange={(e) => setWord(e.target.value)}
-                      placeholder="Введите слово"
-                  />
-                  <button className="wb-button save-button" onClick={handleAddWord}>
-                      <img src={tick} alt={"Добавить"}/>
+                  <div style={{display: "flex", flexDirection: "column"}}>
+                      <input
+                          type="text"
+                          onChange={(e) => setWord(e.target.value)}
+                          placeholder="Введите слово"
+                      />
+                      <input
+                          type="text"
+                          onChange={(e) => setTranslation(e.target.value)}
+                          placeholder="Введите перевод"
+                      />
+                  </div>
+                  <button className="wb-button save-button"
+                          onClick={handleAddWord}>
+                      <img src={tick} alt={"Сохранить"}/>
                   </button>
+              </div>
+              <div className="footer">
                   <BackButton/>
               </div>
           </div>

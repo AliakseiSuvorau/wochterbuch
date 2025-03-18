@@ -72,8 +72,8 @@ const Train = () => {
                     {words.length > 0 && (
                         <div className="word-with-translation-and-choice-buttons">
                             <div className="word-with-translation">
-                                    <h2 style={{margin: 0}}>{words[currentIndex].word}</h2>
-                                    <p style={{margin: 0, color: "#7c7a7a"}}>{words[currentIndex].translation}</p>
+                                <h2 style={{margin: 0}}>{words[currentIndex].word}</h2>
+                                <p style={{margin: 0, color: "#7c7a7a"}}>{words[currentIndex].translation}</p>
                             </div>
                             <div className="article-buttons">
                                 {articles.map((article) => (
@@ -89,10 +89,12 @@ const Train = () => {
                             </div>
                         </div>
                     )}
-                    <BackButton/>
                     <div className="feedback">
                         <p>{feedback}</p>
                     </div>
+                </div>
+                <div className="footer">
+                    <BackButton/>
                 </div>
             </div>
         </div>
