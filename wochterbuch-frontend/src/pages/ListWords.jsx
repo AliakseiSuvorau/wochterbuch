@@ -150,8 +150,9 @@ const ListWords = () => {
                             <img src={add} alt="Добавить"/>
                         </button>
                     </div>
-                    <div className="dict-page-footer footer">
-                        <div className="pagination">
+                </div>
+                <div className="dict-page-footer footer">
+                    <div className="pagination">
                         <span>
                             <button className="wb-button change-page-button main-interface-button"
                                     onClick={() => setPage(prev => Math.max(prev - 1, 1))}
@@ -159,17 +160,16 @@ const ListWords = () => {
                                 <img src={left} alt="Назад"/>
                             </button>
                         </span>
-                            <span className="page-number">Страница {page}</span>
-                            <span>
+                        <span className="page-number">Страница {page}</span>
+                        <span>
                             <button className="wb-button change-page-button main-interface-button"
                                     onClick={() => setPage(prev => prev + 1)}
                                     style={{display: "flex", justifyContent: "center"}}>
                                  <img src={right} alt="Вперед"/>
                             </button>
                         </span>
-                        </div>
-                        <BackButton/>
                     </div>
+                    <BackButton/>
                 </div>
             </div>
         </div>
