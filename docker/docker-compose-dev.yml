@@ -40,6 +40,8 @@ services:
       context: ../wochterbuch-frontend
       dockerfile: Dockerfile
     container_name: wochterbuch-frontend
+    volumes:
+      - ../wochterbuch-frontend/src:/app/src
     env_file:
       - frontend.env
     networks:

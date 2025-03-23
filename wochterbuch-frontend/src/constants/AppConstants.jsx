@@ -5,3 +5,4 @@ const protocol = process.env.REACT_APP_PROTOCOL || 'http';
 export const backendUrl = `${protocol}://${backendRootUrl}`;
 export const frontendUrl = `${protocol}://${frontendRootUrl}`;
 export const articles = ["der", "die", "das"];
+export const defaultPageSize = 8

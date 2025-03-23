@@ -1,52 +1,71 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ArticleButtons from "../components/ArticleButtons";
 import BackButton from "../components/BackButton";
 import {backendUrl} from '../constants/AppConstants';
 import "../styles/App.css";
+import Title from "../components/Title";
+import "../styles/AddWord.css";
+import tick from "../images/tick.svg";
 
 const AddWord = () => {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [word, setWord] = useState("");
-  const navigate = useNavigate();
+  const [translation, setTranslation] = useState("")
 
   const handleAddWord = async () => {
-    if (!selectedArticle || !word) {
-      alert("Выберите артикль и введите слово!");
+    if (!selectedArticle || !word || !translation) {
+      alert("Choose an article and enter a word and a translation!");
       return;
     }
 
     const response = await fetch(`${backendUrl}/dictionary/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ article: selectedArticle, word }),
+      body: JSON.stringify({ article: selectedArticle, word, translation }),
     });
 
     if (response.ok) {
-      alert("Слово добавлено!");
+      alert("The word was added");
       setSelectedArticle(null);
       setWord("");
+      setTranslation("");
     } else {
-      alert("Ошибка при добавлении слова.");
+      alert("Error while adding the word");
     }
   };
 
   return (
       <div className="page-container">
-          <div className="p-4">
-              <h1 className="text-xl mb-4">Добавить слово</h1>
-              <ArticleButtons selectedArticle={selectedArticle} setSelectedArticle={setSelectedArticle}/>
-              <input
-                  type="text"
-                  value={word}
-                  onChange={(e) => setWord(e.target.value)}
-                  placeholder="Введите слово"
-                  className="border p-2 mt-2"
-              />
-              <button className="p-2 border rounded bg-green-500 text-white ml-2" onClick={handleAddWord}>
-                  Add
-              </button>
-              <BackButton/>
+          <div className="page-frame">
+              <Title/>
+              <div className="page-subtitle">
+                  <h2>Добавить слово</h2>
+              </div>
+              <div className="new-word">
+                  <select onChange={(e) => setSelectedArticle(e.target.value)}>
+                      <option value="der">der</option>
+                      <option value="die">die</option>
+                      <option value="das">das</option>
+                  </select>
+                  <div style={{display: "flex", flexDirection: "column"}}>
+                      <input
+                          type="text"
+                          onChange={(e) => setWord(e.target.value)}
+                          placeholder="Введите слово"
+                      />
+                      <input
+                          type="text"
+                          onChange={(e) => setTranslation(e.target.value)}
+                          placeholder="Введите перевод"
+                      />
+                  </div>
+                  <button className="wb-button save-button"
+                          onClick={handleAddWord}>
+                      <img src={tick} alt={"Сохранить"}/>
+                  </button>
+              </div>
+              <div className="footer">
+                  <BackButton/>
+              </div>
           </div>
       </div>
   );
