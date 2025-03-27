@@ -20,18 +20,18 @@ const Home = () => {
                     <div className="vocabulary-actions">
                         <span>
                             <button className="wb-button main-menu-button main-interface-button" onClick={() => navigate("/add")}>
-                                Добавить слово
+                                Add a word
                             </button>
                         </span>
                         <span>
                             <button className="wb-button main-menu-button main-interface-button" onClick={() => navigate("/list")}>
-                                Список слов
+                                Dictionary
                             </button>
                         </span>
                     </div>
                     <div className="train-button">
                         <button className="wb-button main-menu-button main-interface-button" onClick={() => navigate("/train")}>
-                            Режим тренировки
+                            Training mode
                         </button>
                     </div>
                 </div>

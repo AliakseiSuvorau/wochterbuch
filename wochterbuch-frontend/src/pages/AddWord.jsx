@@ -38,7 +38,7 @@ const AddWord = () => {
           <div className="page-frame">
               <Title/>
               <div className="page-subtitle">
-                  <h2>Добавить слово</h2>
+                  <h2>Add a word</h2>
               </div>
               <div className="new-word">
                   <select onChange={(e) => setSelectedArticle(e.target.value)}>
@@ -50,17 +50,17 @@ const AddWord = () => {
                       <input
                           type="text"
                           onChange={(e) => setWord(e.target.value)}
-                          placeholder="Введите слово"
+                          placeholder="Enter a word"
                       />
                       <input
                           type="text"
                           onChange={(e) => setTranslation(e.target.value)}
-                          placeholder="Введите перевод"
+                          placeholder="Enter a translation"
                       />
                   </div>
                   <button className="wb-button save-button"
                           onClick={handleAddWord}>
-                      <img src={tick} alt={"Сохранить"}/>
+                      <img src={tick} alt={"Save"}/>
                   </button>
               </div>
               <div className="footer">
