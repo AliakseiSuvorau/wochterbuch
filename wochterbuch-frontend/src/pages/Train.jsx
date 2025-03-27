@@ -8,7 +8,6 @@ import BackButton from "../components/BackButton";
 import Title from "../components/Title";
 
 const Train = () => {
-    const navigate = useNavigate();
     const [words, setWords] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
@@ -39,7 +38,7 @@ const Train = () => {
 
         const correctArticle = words[currentIndex].article;
         if (article === correctArticle) {
-            setFeedback("Верно!");
+            setFeedback("Correct!");
             setCorrectCount(correctCount + 1);
             setTimeout(() => {
                 if (currentIndex + 1 < words.length) {
@@ -52,7 +51,7 @@ const Train = () => {
                 }
             }, 400);
         } else {
-            setFeedback("Попробуйте еще раз!");
+            setFeedback("Try again!");
             setDisabledArticles([...disabledArticles, article]);
             setCorrectCount(0);
         }
@@ -64,10 +63,10 @@ const Train = () => {
                 <Title/>
                 <div className="train-container">
                     <div className="page-subtitle">
-                        <h2>Режим тренировки</h2>
+                        <h2>Training mode</h2>
                     </div>
                     <div className="train-counter">
-                        <p>Правильных ответов подряд: {correctCount}</p>
+                        <p>Correct answers in a row: {correctCount}</p>
                     </div>
                     {words.length > 0 && (
                         <div className="word-with-translation-and-choice-buttons">

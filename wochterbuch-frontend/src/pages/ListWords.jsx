@@ -66,7 +66,7 @@ const ListWords = () => {
             <div className="page-frame">
                 <Title/>
                 <div className="page-subtitle">
-                    <h2>Список слов</h2>
+                    <h2>Dictionary</h2>
                 </div>
                 <div className="list-container">
                     <div>
@@ -115,7 +115,7 @@ const ListWords = () => {
                                         </div>
                                         <button className="wb-button save-button"
                                                 onClick={() => handleSave(item.id, item.newArticle, item.newWord, item.newTranslation)}>
-                                            <img src={tick} alt={"Сохранить"}/>
+                                            <img src={tick} alt={"Save"}/>
                                         </button>
                                     </div>
                                 ) : (
@@ -134,11 +134,11 @@ const ListWords = () => {
                                         </div>
                                         <button className="wb-button edit-delete-button"
                                                 onClick={() => handleEdit(item.id, item.article, item.word, item.translation)}>
-                                            <img src={edit} alt="Редактировать"/>
+                                            <img src={edit} alt="Edit"/>
                                         </button>
                                         <button className="wb-button edit-delete-button"
                                                 onClick={() => handleDelete(item.id)}>
-                                            <img src={del} alt="Удалить"/>
+                                            <img src={del} alt="Delete"/>
                                         </button>
                                     </div>
                                 )}
@@ -147,7 +147,7 @@ const ListWords = () => {
                     </div>
                     <div style={{display: "flex", justifyContent: "center"}}>
                         <button className="wb-button add-button" onClick={() => navigate("/add")}>
-                            <img src={add} alt="Добавить"/>
+                            <img src={add} alt="Add"/>
                         </button>
                     </div>
                     <div className="dict-page-footer footer">
@@ -156,7 +156,7 @@ const ListWords = () => {
                             <button className="wb-button change-page-button main-interface-button"
                                     onClick={() => setPage(prev => Math.max(prev - 1, 1))}
                                     style={{display: "flex", justifyContent: "center"}}>
-                                <img src={left} alt="Назад"/>
+                                <img src={left} alt="Previous"/>
                             </button>
                         </span>
                             <span className="page-number">Страница {page}</span>
@@ -164,7 +164,7 @@ const ListWords = () => {
                             <button className="wb-button change-page-button main-interface-button"
                                     onClick={() => setPage(prev => prev + 1)}
                                     style={{display: "flex", justifyContent: "center"}}>
-                                 <img src={right} alt="Вперед"/>
+                                 <img src={right} alt="Next"/>
                             </button>
                         </span>
                         </div>

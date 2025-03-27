@@ -7,7 +7,7 @@ const BackButton = () => {
   return (
       <div className="back-button-footer">
           <button className="wb-button main-interface-button" onClick={() => navigate("/")}>
-              Назад
+              Back
           </button>
       </div>
   );
