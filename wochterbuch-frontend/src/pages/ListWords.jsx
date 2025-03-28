@@ -160,7 +160,7 @@ const ListWords = () => {
                                 <img src={left} alt="Previous"/>
                             </button>
                         </span>
-                        <span className="page-number">Страница {page}</span>
+                        <span className="page-number">Page {page}</span>
                         <span>
                             <button className="wb-button change-page-button main-interface-button"
                                     onClick={() => setPage(prev => prev + 1)}
