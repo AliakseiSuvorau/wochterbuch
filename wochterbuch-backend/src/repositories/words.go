@@ -26,7 +26,7 @@ func (wr *WordsRepository) Insert(word *model.Word) error {
 		return nil
 	}
 
-	if wr.exists(word) {
+	if wr.existsByWordAndTranslation(word) {
 		return nil
 	}
 	result := global.DB.Create(word)
@@ -40,7 +40,7 @@ func (wr *WordsRepository) InsertMultiple(words []*model.Word) error {
 			continue
 		}
 
-		if !wr.exists(word) {
+		if !wr.existsByWordAndTranslation(word) {
 			filteredWords = append(filteredWords, word)
 		}
 	}
@@ -53,16 +53,37 @@ func (wr *WordsRepository) InsertMultiple(words []*model.Word) error {
 	return result.Error
 }
 
+func (wr *WordsRepository) Update(word *model.Word) error {
+	if word == nil {
+		return nil
+	}
+
+	if !wr.existsById(word) {
+		return nil
+	}
+
+	result := global.DB.Save(word)
+	return result.Error
+}
+
 func (wr *WordsRepository) GetAll() ([]*model.Word, error) {
 	var words []*model.Word
 	result := global.DB.Find(&words)
 	return words, result.Error
 }
 
-func (wr *WordsRepository) exists(w *model.Word) bool {
+func (wr *WordsRepository) existsByWordAndTranslation(w *model.Word) bool {
 	var count int64
 	global.DB.Model(&model.Word{}).
 		Where("word = ? AND translation = ?", w.Word, w.Translation).
+		Count(&count)
+	return count > 0
+}
+
+func (wr *WordsRepository) existsById(w *model.Word) bool {
+	var count int64
+	global.DB.Model(&model.Word{}).
+		Where("id = ?", w.ID).
 		Count(&count)
 	return count > 0
 }
