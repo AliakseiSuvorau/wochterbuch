@@ -110,3 +110,7 @@ func (wr *WordsRepository) Count() int64 {
 	global.DB.Table("words").Count(&count)
 	return count
 }
+
+func (wr *WordsRepository) Delete(word *model.Word) {
+	global.DB.Delete(word)
+}

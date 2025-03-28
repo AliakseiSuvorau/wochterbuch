@@ -156,3 +156,25 @@ func EditWord(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func DeleteWord(w http.ResponseWriter, r *http.Request) {
+	body := r.Body
+	defer bodyCloser(body)
+
+	payload, readErr := io.ReadAll(body)
+	if readErr != nil {
+		log.Printf("Error has occurred while reading request body: %v", readErr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var newWord model.Word
+	if jsonErr := json.Unmarshal(payload, &newWord); jsonErr != nil {
+		log.Printf("Error has occurred while unmarshalling request body: %v", jsonErr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	wordRepository := repositories.WordsRepository{}
+	wordRepository.Delete(&newWord)
+}
