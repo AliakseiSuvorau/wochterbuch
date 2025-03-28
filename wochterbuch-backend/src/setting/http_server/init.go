@@ -16,7 +16,7 @@ const defaultWordRandomBatchSize = 10
 func Init() {
 	http.HandleFunc("/dictionary/word/add", routes.AddWord)
 	http.HandleFunc("/dictionary/word/edit", routes.EditWord)
-	http.HandleFunc("/dictionary/list", routes.GetAllWords)
+	http.HandleFunc("/dictionary/list", routes.GetPage)
 	http.HandleFunc("/dictionary/getRandom", routes.GetRandomWords)
 
 	port := "6029" // Default port

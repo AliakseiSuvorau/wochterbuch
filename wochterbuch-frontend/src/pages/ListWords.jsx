@@ -21,7 +21,13 @@ const ListWords = () => {
     useEffect(() => {
         fetch(`${backendUrl}/dictionary/list?page=${page}&size=${pageSize}`)
             .then((res) => res.json())
-            .then((data) => setWords(data))
+            .then((data) => {
+                if (!data) {
+                    setWords([])
+                } else {
+                    setWords(data)
+                }
+            })
             .catch(() => alert("Error while fetching words"));
     }, [page]);
 
@@ -59,6 +65,17 @@ const ListWords = () => {
                 ));
             })
             .catch(() => alert("Error editing a word"));
+    };
+
+    const handleNextPage = () => {
+        fetch(`${backendUrl}/dictionary/list?page=${page + 1}&size=${pageSize}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (data && data.length > 0) {
+                    setPage(prev => prev + 1);
+                }
+            })
+            .catch(() => alert("Error checking next page"));
     };
 
     return (
@@ -163,7 +180,7 @@ const ListWords = () => {
                         <span className="page-number">Page {page}</span>
                         <span>
                             <button className="wb-button change-page-button main-interface-button"
-                                    onClick={() => setPage(prev => prev + 1)}
+                                    onClick={handleNextPage}
                                     style={{display: "flex", justifyContent: "center"}}>
                                  <img src={right} alt="Next"/>
                             </button>

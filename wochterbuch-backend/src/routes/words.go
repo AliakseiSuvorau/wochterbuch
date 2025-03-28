@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strconv"
 	"time"
 
 	"wochterbuch-backend/src/global"
@@ -39,11 +40,27 @@ func AddWord(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetAllWords(w http.ResponseWriter, r *http.Request) {
+func GetPage(w http.ResponseWriter, r *http.Request) {
+	pageNum, errConv := strconv.Atoi(r.URL.Query().Get("page"))
+	if errConv != nil {
+		log.Printf("Error has occurred while parsing page number: %v", errConv)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	println(pageNum)
+
+	pageSize, errConv := strconv.Atoi(r.URL.Query().Get("size"))
+	if errConv != nil {
+		log.Printf("Error has occurred while parsing page size: %v", errConv)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	println(pageSize)
+
 	wordRepository := repositories.WordsRepository{}
-	words, err := wordRepository.GetAll()
+	words, err := wordRepository.GetRange((pageNum-1)*pageSize+1, pageNum*pageSize+1)
 	if err != nil {
-		log.Printf("Error has occurred while getting all words: %v", err)
+		log.Printf("Error has occurred while getting range of words: %v", err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
