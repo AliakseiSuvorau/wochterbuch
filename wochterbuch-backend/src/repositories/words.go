@@ -72,6 +72,23 @@ func (wr *WordsRepository) GetAll() ([]*model.Word, error) {
 	return words, result.Error
 }
 
+func (wr *WordsRepository) GetRange(from, to int) ([]*model.Word, error) {
+	var words []*model.Word
+	from--
+	total := int(wr.Count())
+	if from >= to || from >= total {
+		return words, nil
+	}
+
+	if to > total {
+		to = total
+	}
+
+	pageSize := to - from
+	result := global.DB.Offset(from).Limit(pageSize).Find(&words)
+	return words, result.Error
+}
+
 func (wr *WordsRepository) existsByWordAndTranslation(w *model.Word) bool {
 	var count int64
 	global.DB.Model(&model.Word{}).
