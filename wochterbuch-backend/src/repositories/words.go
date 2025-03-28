@@ -1,10 +1,7 @@
 package repositories
 
 import (
-	"errors"
 	"strconv"
-
-	"gorm.io/gorm"
 
 	"wochterbuch-backend/src/global"
 	"wochterbuch-backend/src/model"
@@ -63,7 +60,11 @@ func (wr *WordsRepository) GetAll() ([]*model.Word, error) {
 }
 
 func (wr *WordsRepository) exists(w *model.Word) bool {
-	return !errors.Is(global.DB.First(w).Error, gorm.ErrRecordNotFound)
+	var count int64
+	global.DB.Model(&model.Word{}).
+		Where("word = ? AND translation = ?", w.Word, w.Translation).
+		Count(&count)
+	return count > 0
 }
 
 func (wr *WordsRepository) Count() int64 {

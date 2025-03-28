@@ -87,10 +87,6 @@ func GetRandomWords(w http.ResponseWriter, r *http.Request) {
 	randomGenerator := rand.New(rand.NewSource(time.Now().Unix()))
 	randomIndexes := processIndexes(castIntToUint64(randomGenerator.Perm(int(numWordsInDict))[:batchSize]))
 
-	for _, v := range randomIndexes {
-		println(v)
-	}
-
 	words, err := wr.GetByIds(randomIndexes)
 	if err != nil {
 		log.Printf("Error has occurred while getting random words: %v", err)

@@ -22,7 +22,7 @@ func Init() {
 	)
 
 	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", user, pass, host, port, dbname)
-	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
+	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{Logger: logger.Default.LogMode(logger.Info)})
 	if err != nil {
 		panic(fmt.Sprintf("failed to connect database: %v", err.Error()))
 	}

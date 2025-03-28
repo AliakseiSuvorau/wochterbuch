@@ -12,7 +12,7 @@ Add words to a dictionary and train articles for them.
 
 ## Run the application
 
-Starts only backend with database:
+Start only backend with database:
 ```
 docker-compose -f .\docker\docker-compose-backend.yml up -d
 ```
@@ -22,7 +22,7 @@ Start only frontend:
 npm start
 ```
 
-Starts the app as a whole:
+Start the app as a whole:
 ```
 docker-compose -f .\docker\docker-compose-dev.yml up -d
 ```

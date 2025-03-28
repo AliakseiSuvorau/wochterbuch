@@ -23,6 +23,10 @@ input {
     border: .125rem solid #19ae19;
     border-radius: .375rem;
     font-size: large;
+    color: black;
+}
+
+input::placeholder {
     color: #7c7a7a;
 }
 
