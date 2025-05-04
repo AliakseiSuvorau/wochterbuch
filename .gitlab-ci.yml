@@ -1,0 +1,4 @@
+include:
+  - project: "AliakseiSuvorau/ci-template"
+    file: '/.gitlab-ci.yml'
+    ref: 'main'

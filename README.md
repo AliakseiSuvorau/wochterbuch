@@ -26,3 +26,8 @@ Start the app as a whole:
 ```
 docker-compose -f .\docker\docker-compose-dev.yml up -d
 ```
+
+To start GitLab CI pipeline, one needs to install a gitlab runner utility (follow instructions from GitLab), configure a runner and start it:
+```
+.\gitlab-runner.exe run
+```
