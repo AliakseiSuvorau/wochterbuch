@@ -74,6 +74,7 @@ func (wr *WordsRepository) GetAll() ([]*model.Word, error) {
 
 func (wr *WordsRepository) GetRange(from, to int) ([]*model.Word, error) {
 	var words []*model.Word
+	pageSize := to - from
 	from--
 	total := int(wr.Count())
 	if from >= to || from >= total {
@@ -84,7 +85,6 @@ func (wr *WordsRepository) GetRange(from, to int) ([]*model.Word, error) {
 		to = total
 	}
 
-	pageSize := to - from
 	result := global.DB.Offset(from).Limit(pageSize).Find(&words)
 	return words, result.Error
 }
@@ -109,4 +109,8 @@ func (wr *WordsRepository) Count() int64 {
 	var count int64
 	global.DB.Table("words").Count(&count)
 	return count
+}
+
+func (wr *WordsRepository) Delete(word *model.Word) {
+	global.DB.Delete(word)
 }

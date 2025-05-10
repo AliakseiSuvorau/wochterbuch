@@ -47,7 +47,6 @@ func GetPage(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	println(pageNum)
 
 	pageSize, errConv := strconv.Atoi(r.URL.Query().Get("size"))
 	if errConv != nil {
@@ -55,7 +54,6 @@ func GetPage(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	println(pageSize)
 
 	wordRepository := repositories.WordsRepository{}
 	words, err := wordRepository.GetRange((pageNum-1)*pageSize+1, pageNum*pageSize+1)
@@ -155,4 +153,26 @@ func EditWord(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+}
+
+func DeleteWord(w http.ResponseWriter, r *http.Request) {
+	body := r.Body
+	defer bodyCloser(body)
+
+	payload, readErr := io.ReadAll(body)
+	if readErr != nil {
+		log.Printf("Error has occurred while reading request body: %v", readErr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var newWord model.Word
+	if jsonErr := json.Unmarshal(payload, &newWord); jsonErr != nil {
+		log.Printf("Error has occurred while unmarshalling request body: %v", jsonErr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	wordRepository := repositories.WordsRepository{}
+	wordRepository.Delete(&newWord)
 }
